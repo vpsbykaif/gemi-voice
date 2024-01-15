@@ -13,7 +13,7 @@ for t in `ls` ; do tar xvf $t ; done
 
 ls lib/voices/us > ../voices.txt
 
-mv lib/voices/us /usr/share/festival/voices/us
+mv lib/voices/us/* /usr/share/festival/voices/english/.
 mv lib/hts.scm /usr/share/festival/hts.scm
 
 cd ..

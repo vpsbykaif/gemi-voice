@@ -10,11 +10,17 @@ def flite_init():
 
 @speak_api.get("/festival")
 async def festival(text: str, voice_id: str, tts: FestivalTTS = Depends(FestivalTTS)):
-    return Response(content=await tts.say(text, voice_id), media_type="audio/x-wav")
+    async for voice in tts.voices():
+        if voice.id == voice_id:
+            return Response(content=await tts.say(text, voice_id), media_type="audio/x-wav")
+    return Response(content="Voice not found", status_code=400)
 
 @speak_api.get("/flite")
 async def flite(text: str, voice_id: str, tts: FliteTTS = Depends(flite_init)):
-    return Response(content=await tts.say(text, voice_id), media_type="audio/x-wav")
+    async for voice in tts.voices():
+        if voice.id == voice_id:
+            return Response(content=await tts.say(text, voice_id), media_type="audio/x-wav")
+    return Response(content="Voice not found", status_code=400)
 
 @speak_api.get("/voices")
 async def voices(festival: Annotated[FestivalTTS, Depends(FestivalTTS)], flite: Annotated[FliteTTS, Depends(flite_init)]):
