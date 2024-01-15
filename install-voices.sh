@@ -20,5 +20,5 @@ cd ..
 rm -rf hts_tmp
 
 for t in `curl http://cmuflite.org/packed/flite-2.3/voices/us_voices`; do
-    curl -O http://cmuflite.org/packed/flite-2.3/voices/$t
+    curl -o voices/flite/$t http://cmuflite.org/packed/flite-2.3/voices/$t
 done
