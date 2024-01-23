@@ -2,7 +2,7 @@
 FROM --platform=linux/amd64 python:3.11-slim
 
 RUN echo 'deb http://deb.debian.org/debian stable main contrib' > /etc/apt/sources.list
-RUN apt-get update && apt-get install -y curl bzip2 ffmpeg festival flite
+RUN apt-get update && apt-get install -y curl bzip2 ffmpeg festival flite festvox-us-slt-hts
 
 # Set the working directory in the container
 WORKDIR /app
