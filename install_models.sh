@@ -7,10 +7,10 @@ for t in `curl http://cmuflite.org/packed/flite-2.3/voices/us_voices`; do
 done
 
 mkdir tmp
-curl -o tmp/vosk-model-en-in-0.5.zip https://alphacephei.com/vosk/models/vosk-model-en-in-0.5.zip
+curl -o tmp/vosk-model-en-us-daanzu-20200905-lgraph.zip https://alphacephei.com/vosk/models/vosk-model-en-us-daanzu-20200905-lgraph.zip
 
 cd models
-unzip -o ../tmp/vosk-model-en-in-0.5.zip
+unzip -o ../tmp/vosk-model-en-us-daanzu-20200905-lgraph.zip
 
 cd ..
 rm -rf tmp
