@@ -37,3 +37,7 @@ venv.bak/
 
 # IDE Configs
 .vscode/
+
+# Models
+voices/*/*.flitevox
+models/vosk-*

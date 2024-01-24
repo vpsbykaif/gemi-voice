@@ -8,7 +8,7 @@ class VoskRecognizer:
 
     def __init__(self):
         self.rec = Recognizer()
-        self.rec.vosk_model = Model("models/vosk-model-small-en-us-0.15")
+        self.rec.vosk_model = Model("models/vosk-model-en-in-0.5")
 
     async def listen(self, upload_file: UploadFile) -> str:
         with AudioFile(upload_file.file) as audio_file:
