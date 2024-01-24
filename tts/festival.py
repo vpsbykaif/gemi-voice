@@ -251,3 +251,33 @@ class FestivalTTS(TTSBase):
 
             wav_file.seek(0)
             return wav_file.read()
+        
+    async def save(self, text: str, voice_id: str, **kwargs):
+        """Speak text as WAV."""
+        # Default to part 15 encoding to handle "special" characters.
+        # See https://www.web3.lu/character-encoding-for-festival-tts-files/
+        encoding = "iso-8859-15"
+
+        # Look up encoding by language
+        voice = self._voice_by_id.get(voice_id)
+        if voice:
+            encoding = FestivalTTS.LANGUAGE_ENCODINGS.get(voice.language, encoding)
+
+        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as wav_file:
+            festival_cmd = [
+                "text2wave",
+                "-o",
+                wav_file.name,
+                "-eval",
+                f"(voice_{voice_id})",
+            ]
+            _LOGGER.debug(festival_cmd)
+
+            proc = await asyncio.create_subprocess_exec(
+                *festival_cmd,
+                stdin=asyncio.subprocess.PIPE,
+                stdout=asyncio.subprocess.PIPE,
+            )
+            await proc.communicate(input=text.encode(encoding=encoding))
+
+            return wav_file.name

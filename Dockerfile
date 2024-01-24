@@ -2,7 +2,7 @@
 FROM --platform=linux/amd64 python:3.11-slim
 
 RUN echo 'deb http://deb.debian.org/debian stable main contrib' > /etc/apt/sources.list
-RUN apt-get update && apt-get install -y curl bzip2 ffmpeg festival flite festvox-us-slt-hts
+RUN apt-get update && apt-get install -y curl unzip ffmpeg festival flite festvox-us-slt-hts
 
 # Set the working directory in the container
 WORKDIR /app
@@ -10,9 +10,9 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . .
 
-# Install all required festival voices
-RUN chmod +x ./install-voices.sh
-RUN ./install-voices.sh
+# Install all required festival voices and vosk models
+RUN chmod +x ./install_models.sh
+RUN ./install_models.sh
 
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt

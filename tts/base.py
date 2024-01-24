@@ -30,3 +30,7 @@ class TTSBase(metaclass=ABCMeta):
     async def say(self, text: str, voice_id: str, **kwargs) -> bytes:
         """Speak text as WAV."""
         return bytes()
+    
+    async def save(self, text: str, voice_id: str, **kwargs) -> str:
+        """Save text as WAV."""
+        return str()

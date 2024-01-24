@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import shlex
+import tempfile
 import typing
 from pathlib import Path
 
@@ -268,3 +269,24 @@ class FliteTTS(TTSBase):
         )
         stdout, _ = await proc.communicate()
         return stdout
+    
+    async def save(self, text: str, voice_id: str, **kwargs) -> str:
+        """Save text as WAV."""
+        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as wav_file:
+            flite_cmd = [
+                "flite",
+                "-voice",
+                shlex.quote(str(self.voice_dir / f"{voice_id}.flitevox")),
+                "-o",
+                wav_file.name,
+                "-t",
+                shlex.quote(text),
+            ]
+            _LOGGER.debug(flite_cmd)
+
+            proc = await asyncio.create_subprocess_exec(
+                *flite_cmd, stdout=asyncio.subprocess.PIPE
+            )
+            await proc.communicate()
+            
+            return wav_file.name

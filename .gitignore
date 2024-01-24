@@ -161,3 +161,4 @@ cython_debug/
 
 # Speech synthesis voices
 voices/*/*.flitevox
+models/vosk-*
