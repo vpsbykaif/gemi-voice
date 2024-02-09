@@ -13,7 +13,7 @@ class WitRecognizer:
         self.rec = Recognizer()
 
     async def convert_to_wav(self, audio_bytes: bytes, wav_path: str):
-        command = ['ffmpeg', '-i', '-', wav_path]
+        command = ['ffmpeg', '-i', '-', '-y', wav_path]
         proc = await asyncio.create_subprocess_exec(
             *command,
             stdin=asyncio.subprocess.PIPE,
